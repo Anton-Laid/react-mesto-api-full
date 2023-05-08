@@ -1,0 +1,10 @@
+.registerg__button-exit {
+  background-color: rgba(0, 0, 0, 0);
+  color: #fff;
+  cursor: pointer;
+  border: none;
+}
+
+.registerg__button-exit:hover {
+  opacity: 0.6;
+}
