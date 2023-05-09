@@ -16,6 +16,7 @@ const NotFoundError = require("../errors/NotFoundError");
 const BadRequestError = require("../errors/BadRequestError");
 const UnauthorizedError = require("../errors/UnauthorizedError");
 const ConflictError = require("../errors/ConflictError");
+const { JWT_SECRET, NODE_ENV } = require("../utils/config");
 
 const getUsers = (req, res, next) => {
   User.find({})
@@ -27,7 +28,7 @@ const getUsers = (req, res, next) => {
           avatar: item.avatar,
           _id: item.id,
           email: item.email,
-        })),
+        }))
       );
     })
     .catch(next);
@@ -70,25 +71,27 @@ const getCurrentUser = (req, res, next) => {
 };
 
 const createUsers = (req, res, next) => {
-  const {
-    name, about, avatar, email, password,
-  } = req.body;
+  const { name, about, avatar, email, password } = req.body;
 
   return bcrypt
     .hash(password, 10)
-    .then((hash) => User.create({
-      name,
-      about,
-      avatar,
-      email,
-      password: hash,
-    }))
-    .then((user) => res.status(STATUS_CREATED).send({
-      name: user.name,
-      about: user.about,
-      avatar: user.avatar,
-      _id: user.id,
-    }))
+    .then((hash) =>
+      User.create({
+        name,
+        about,
+        avatar,
+        email,
+        password: hash,
+      })
+    )
+    .then((user) =>
+      res.status(STATUS_CREATED).send({
+        name: user.name,
+        about: user.about,
+        avatar: user.avatar,
+        _id: user.id,
+      })
+    )
     .catch((err) => {
       if (err.code === 11000) {
         next(new ConflictError("Пользователь уже зарегистрирован"));
@@ -106,7 +109,7 @@ const updataUser = (req, res, next) => {
   User.findByIdAndUpdate(
     req.user._id,
     { name, about },
-    { new: true, runValidators: true },
+    { new: true, runValidators: true }
   )
     .then((user) => {
       if (!user) {
@@ -127,7 +130,7 @@ const updateAvatar = (req, res, next) => {
   User.findByIdAndUpdate(
     req.user._id,
     { avatar },
-    { new: true, runValidators: true, upsert: false },
+    { new: true, runValidators: true, upsert: false }
   )
     .then((user) => {
       if (!user) {
@@ -152,9 +155,10 @@ const login = (req, res, next) => {
 
   return User.findUserByCredentials(email, password)
     .then((user) => {
-      const token = jwt.sign({ _id: user._id }, "super-strong-secret", {
-        expiresIn: "7d",
-      });
+      const token = jwt.sign(
+        { _id: user._id },
+        NODE_ENV === "production" ? JWT_SECRET : "dev-secret"
+      );
 
       res.send({ token });
     })

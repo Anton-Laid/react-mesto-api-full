@@ -9,6 +9,7 @@ const {
   MSG_PAGE_NOT_FOUND,
   MSG_DEFAULT,
 } = require("./utils/constants");
+const { requestLogger, errorLogger } = require("./middlewares/logger");
 
 const { PORT = 3000 } = process.env;
 const app = express();
@@ -18,7 +19,11 @@ mongoose.connect("mongodb://127.0.0.1:27017/mestodb");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+app.use(requestLogger);
+
 app.use(route);
+
+app.use(errorLogger);
 
 app.use((req, res, next) => {
   next(new NotFoundError(MSG_PAGE_NOT_FOUND));
