@@ -143,7 +143,7 @@ function App() {
       .then((res) => {
         navigate('/sing-in');
         setInfoTooltip(true);
-        setEmail(res.data.email);
+        //setEmail(res.data.email);
         setMessage({
           imgPath: unionTrue,
           text: 'Вы успешно зарегистрировались!',
