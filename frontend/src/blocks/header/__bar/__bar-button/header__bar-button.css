@@ -9,6 +9,8 @@
   cursor: pointer;
   width: 65px;
   height: 22px;
+  border: none;
+  margin: auto;
 }
 
 .header__bar-button:hover {

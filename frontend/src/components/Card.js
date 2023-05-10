@@ -9,8 +9,9 @@ function Card(props) {
   const isOwn = card.owner._id === currentUser._id;
   const isLiked = card.likes.some((item) => item._id === currentUser._id);
 
-  const cardLikeButtonClassName = `photo__like 
-  ${isLiked && 'photo__like_active'}`;
+  const cardLikeButtonClassName = `photo__like ${
+    isLiked && 'photo__like_active'
+  }`;
 
   return (
     <div className="photo">

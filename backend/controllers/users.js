@@ -115,7 +115,14 @@ const updataUser = (req, res, next) => {
       if (!user) {
         throw new NotFoundError(MSG_PROFILE_NOT_FOUND);
       }
-      return res.status(STATUS_OK).send({ name: user.name, about: user.about });
+      return res
+        .status(STATUS_OK)
+        .send({
+          name: user.name,
+          about: user.about,
+          avatar: user.avatar,
+          _id: user.id,
+        });
     })
     .catch((error) => {
       if (error.name === VALIDATION_ERROR) {

@@ -33,7 +33,7 @@ function App() {
   const [currentUser, setCurrentUser] = useState({});
   const [cards, setCards] = useState([]);
   const [openPopupImage, setOpenPopupImage] = useState(false);
-
+  console.log(currentUser);
   const handlePopupImage = () => {
     setOpenPopupImage(!openPopupImage);
   };
@@ -143,7 +143,7 @@ function App() {
       .then((res) => {
         navigate('/sing-in');
         setInfoTooltip(true);
-        //setEmail(res.data.email);
+        setEmail(res.email);
         setMessage({
           imgPath: unionTrue,
           text: 'Вы успешно зарегистрировались!',
@@ -170,7 +170,7 @@ function App() {
       auth
         .getContent(jwt)
         .then((res) => {
-          setEmail(res.data.email);
+          setEmail(res.email);
           setLoggedIn(true);
           navigate('/', { replace: true });
         })
@@ -205,6 +205,11 @@ function App() {
     <>
       <CurrentUserContext.Provider value={currentUser}>
         <Routes>
+          <Route path="/sing-in" element={<Login onLogin={onLogin} />} />
+          <Route
+            path="/sing-up"
+            element={<Register onRegister={onRegister} />}
+          />
           <Route
             path="/"
             element={
@@ -223,11 +228,6 @@ function App() {
               />
             }
           />
-          <Route
-            path="/sing-up"
-            element={<Register onRegister={onRegister} />}
-          />
-          <Route path="/sing-in" element={<Login onLogin={onLogin} />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
 

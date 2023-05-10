@@ -78,7 +78,7 @@ class Api {
 const api = new Api({
   url: 'https://api.project.mesto.nomoredomains.monster',
   headers: {
-    authorization: `Bearer ${localStorage.getItem('token')}`,
+    Authorization: `Bearer ${localStorage.getItem('jwt')}`,
     'Content-Type': 'application/json',
   },
 });
