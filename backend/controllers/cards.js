@@ -34,7 +34,7 @@ const createCard = (req, res, next) => {
         owner: card.owner,
         _id: card._id,
         createdAt: data,
-        likes: card,
+        likes: card.likes,
       });
     })
     .catch((error) => {
