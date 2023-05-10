@@ -34,11 +34,12 @@ function Card(props) {
           </div>
         </div>
       </div>
-
-      <button
-        className="photo__removel"
-        onClick={() => handleCardDelete(card)}
-      ></button>
+      {isOwn && (
+        <button
+          className="photo__removel"
+          onClick={() => handleCardDelete(card)}
+        ></button>
+      )}
     </div>
   );
 }

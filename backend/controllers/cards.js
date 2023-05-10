@@ -34,7 +34,7 @@ const createCard = (req, res, next) => {
         owner: card.owner,
         _id: card._id,
         createdAt: data,
-        likes: card.likes,
+        likes: card,
       });
     })
     .catch((error) => {
@@ -54,9 +54,13 @@ const deleteCard = (req, res, next) => {
       if (!card) next(new NotFoundError(MSG_INVALID_CARD_DATA));
       const idOwner = card.owner.toString();
 
-      Card.deleteOne({ _id: card.id }).then((card) =>
-        res.status(STATUS_OK).send(card)
-      );
+      if (UserId === idOwner) {
+        Card.deleteOne({ _id: card.id }).then((card) =>
+          res.status(STATUS_OK).send(card)
+        );
+      } else {
+        next(new ForbiddenError(MSG_NOT_YOUR_OWN_CARD));
+      }
     })
     .catch(next);
 };
