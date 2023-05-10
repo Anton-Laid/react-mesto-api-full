@@ -8,7 +8,6 @@ function Card(props) {
 
   const isOwn = card.owner === currentUser._id;
   const isLiked = card.likes.some((owner) => owner === currentUser._id);
-  console.log(isLiked);
 
   const cardLikeButtonClassName = `photo__like ${
     isLiked && 'photo__like_active'
@@ -35,12 +34,11 @@ function Card(props) {
           </div>
         </div>
       </div>
-      {isOwn && (
-        <button
-          className="photo__removel"
-          onClick={() => handleCardDelete(card)}
-        ></button>
-      )}
+
+      <button
+        className="photo__removel"
+        onClick={() => handleCardDelete(card)}
+      ></button>
     </div>
   );
 }

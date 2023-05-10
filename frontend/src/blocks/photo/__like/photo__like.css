@@ -14,3 +14,26 @@
 .photo__like:hover {
   opacity: 0.5;
 }
+
+/* {isOwn && (
+  <button
+    className="photo__removel"
+    onClick={() => handleCardDelete(card)}
+  ></button>
+)} */
+
+/* Card.findById(cardId)
+    .then((card) => {
+      if (!card) next(new NotFoundError(MSG_INVALID_CARD_DATA));
+      const idOwner = card.owner.toString();
+
+      if (UserId === idOwner) {
+        Card.deleteOne({ _id: card.id }).then((card) =>
+          res.status(STATUS_OK).send(card)
+        );
+      } else {
+        next(new ForbiddenError(MSG_NOT_YOUR_OWN_CARD));
+      }
+    })
+    .catch(next);
+}; */

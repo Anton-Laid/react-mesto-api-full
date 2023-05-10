@@ -33,7 +33,7 @@ function App() {
   const [currentUser, setCurrentUser] = useState({});
   const [cards, setCards] = useState([]);
   const [openPopupImage, setOpenPopupImage] = useState(false);
-  console.log(currentUser);
+
   const handlePopupImage = () => {
     setOpenPopupImage(!openPopupImage);
   };
