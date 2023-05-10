@@ -6,8 +6,9 @@ function Card(props) {
 
   const currentUser = useContext(CurrentUserContext);
 
-  const isOwn = card.owner._id === currentUser._id;
-  const isLiked = card.likes.some((item) => item._id === currentUser._id);
+  const isOwn = card.owner === currentUser._id;
+  const isLiked = card.likes.some((owner) => owner === currentUser._id);
+  console.log(isLiked);
 
   const cardLikeButtonClassName = `photo__like ${
     isLiked && 'photo__like_active'
@@ -29,7 +30,9 @@ function Card(props) {
             type="button"
             onClick={() => handleCardLike(card)}
           ></button>
-          <div className="photo__like-sum">{card.likes.length}</div>
+          <div className="photo__like-sum">
+            {card.likes === 0 ? 0 : card.likes.length}
+          </div>
         </div>
       </div>
       {isOwn && (
